@@ -1,3 +1,8 @@
-# Aplicacion CRUD de usarios para terminal de comandos - Golnag
+# Users CRUD app for command terminal - Golang
 
-Esta aplicacion esta desarrollada en el lenguaje Go(Golang).
+This application is developed in the Go (Golang) language.
+
+### To run the project
+```
+go run ./main.go
+```
