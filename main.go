@@ -69,7 +69,36 @@ func listarUsuario() {
 }
 
 func actualizarUsuario() {
-	fmt.Println("Actualizar usuario")
+	clearConsole()
+	fmt.Print("Ingrese el id del usuario a editar: ")
+	id, err := strconv.Atoi(readLine())
+
+	if err != nil {
+		panic("No es posible convertir el id a entero")
+	}
+
+	if _, ok := users[id]; !ok {
+		panic(">>> No existe un usuario con el id proporcionado")
+	}
+
+	fmt.Print("Ingrese el nombre de usuario: ")
+	name := readLine()
+
+	fmt.Print("Ingrese el email de usuario: ")
+	email := readLine()
+
+	fmt.Print("Ingrese la edad de usuario: ")
+	age, err := strconv.Atoi(readLine()) // Convertir el string a entero
+
+	if err != nil {
+		panic("No es posible convertir la edad a entero")
+	}
+
+	user := User { id, name, email, age }
+	users[id] = user
+
+	fmt.Println(">>> Usuario actualizado exitosamente!\n")
+
 }
 
 func eliminarUsuario() {
@@ -82,11 +111,13 @@ func eliminarUsuario() {
 		panic("No es posible convertir el id a entero")
 	}
 
-	if _, ok := users[id]; ok {
-		delete(users, id)
+	if _, ok := users[id]; !ok {
+		panic(">>> No existe un usuario con el id proporcionado")
 	}
 
+	delete(users, id)
 	fmt.Println(">>> Usuario eliminado exitosamente!\n")
+
 }
 
 // Funcion que ejecuta un comando de consola para limpiar la pantalla
@@ -109,6 +140,12 @@ func readLine() string {
 }
 
 func main() {
+
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("Ups! Ocurrió un error!")
+		}
+	}()
 	
 	var option string
 	
